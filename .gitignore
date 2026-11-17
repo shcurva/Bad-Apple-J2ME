@@ -10,3 +10,9 @@ __pycache__/
 .idea/
 .vscode/
 *.iml
+data.out
+src/bad_apple_turtle/
+src/bad_apple_turtle.egg-info/
+PKG-INFO
+setup.cfg
+pyproject.toml
