@@ -1,20 +1,60 @@
-# bad-apple-turtle
-A program that plays Bad Apple!! on a Python Turtle
+cd ~/j2me/bad-apple
 
-This had just been nearly completely re-written to be better in almost every way. Pypotrace is no longer used in this version.
+# Перезаписываем README правильным содержимым
+cat > README.md << 'EOF'
+# Bad Apple!! J2ME
 
-Python-vlc is used when playing back a video along side the turtle, but it technically optional. Make sure VLC Media Player is installed before python-vlc if you want to use it.
+Полноценный порт клипа Bad Apple!! на Java ME (J2ME) с 10 сборками под разные устройства.
 
-You can install this with `pip install bad-apple-turtle`. From there, you can run the command with `bad-apple-turtle`.
+## Особенности
 
-You have several options when running the command. You can directly play a video in a turtle by specifying it in the command with `-v`/`--video`. If you don't want the original to play next to it, you can use the `--no-vlc` argument. If you want to export the resulting vectorized video to a file, you can also specify an output file with `-o`/`--output`. You can then play the vectorized video again later using `-i`/`--input`. If you specify a vectorized video and a normal video at the same time, the turtle will play the vectorized one while VLC will play the normal video. If you just want to output a file without playing the video at the same time, you can use the `--no-play` argument. Once the vectorized video is exported, the original is no longer required for turtle playback, though there is no audio included.
+- 10 вариантов: от 10 FPS Lite (128×96) до 30 FPS Ultra (720×540)
+- Автоповорот для портретных экранов
+- Синхронизация видео и MIDI
+- Пауза при входящем звонке
+- Preverified классы для S40 устройств
 
-If the turtle is not synchronized with the video, you can try increasing the `--vlc_delay` option, though it's already fairly high. If you are getting lots of dropped frames, you can use the simplification options, which are `--max-points` and `--min-area`. `--max-points` is the maximum number of points in a frame times the square root of the number of curves before the vectors are simplified. `--min-area` is the minimum area a curve needs for it to be rendered. Alternatively, you can try increasing `--tolerance`, which is how much time offset is allowed before frames are dropped, or get a faster computer.
+## Сборки
 
-Increasing the `--threshold` will increase how much of the greys are converted to black, and decreasing it will increase the amount of white. You can also use `-ss` and `-to` to specify starting and ending frames to playback (or export to a file)
+| Название | FPS | Разрешение | Размер |
+|----------|-----|------------|--------|
+| 10 FPS | 10 | 160×120 | ~5.3 МБ |
+| 13 FPS | 13 | 160×120 | ~6.9 МБ |
+| 15 FPS | 15 | 160×120 | ~7.9 МБ |
+| 10 FPS Lite | 10 | 128×96 | ~3.4 МБ |
+| 13 FPS Lite | 13 | 128×96 | ~4.4 МБ |
+| 15 FPS Lite | 15 | 128×96 | ~5.0 МБ |
+| 20 FPS | 20 | 160×120 | ~10.5 МБ |
+| 20 FPS Lite | 20 | 128×96 | ~6.7 МБ |
+| 20 FPS Full | 20 | 320×240 | ~42 МБ |
+| 30 FPS Ultra | 30 | 720×540 | ~320 МБ |
 
-There are other options and I recommend you use `--help` for more information.
+## Установка
 
-I used this video for testing: https://www.youtube.com/watch?v=UkgK8eUdpAo
+1. Скачай нужный JAR из [Releases](https://github.com/shcurva/Bad-Apple-J2ME/releases)
+2. Перекинь на телефон (Bluetooth, USB, карта памяти)
+3. Установи как обычное Java-приложение
 
-Theoretically, you could probably put any video through this, but I do not know how well it would work and it would be converted to binary black and white.
+## Управление
+
+- **Левая софт-клавиша / 5** - Пауза
+- **Правая софт-клавиша / #** - Выход
+- **5 (на экране FIN)** - Рестарт
+
+## Тестировалось на
+
+- Nokia C5-00 (S60v3) ✅
+- Nokia 6300 (S40) ✅
+- FreeJ2ME (эмулятор) ✅
+- J2ME Loader (эмулятор) ✅
+## Сборка
+
+```bash
+# Установить зависимости
+sudo apt install -y openjdk-8-jdk proguard imagemagick
+
+# Конвертация видео
+python3 convert.py bad_apple.mp4 -o j2me/badapple_10fps_160x120.bin -f 10 -W 160 -H 120
+
+# Сборка JAR
+./build.sh 10fps
