@@ -1,9 +1,3 @@
-cd ~/j2me/bad-apple
-
-# Перезаписываем README правильным содержимым
-cat > README.md << 'EOF'
-# Bad Apple!! J2ME
-
 Полноценный порт клипа Bad Apple!! на Java ME (J2ME) с 10 сборками под разные устройства.
 
 ## Особенности
