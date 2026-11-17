@@ -1,0 +1,12 @@
+*.bin
+j2me/projects/*/build/
+build/
+venv/
+__pycache__/
+*.pyc
+*.tmp
+*.log
+.DS_Store
+.idea/
+.vscode/
+*.iml
